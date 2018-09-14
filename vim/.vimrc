@@ -1,72 +1,3 @@
-set sw=4
-set expandtab
-set ignorecase
-set ruler
-set backspace=indent,eol,start
-
-set nohlsearch
-set pastetoggle=<F12>
-
-let g:tex_conceal=""
-
-let fortran_free_source=1
-
-if version > 710
-  source extras.vim
-endif
-
-autocmd FileType make set noexpandtab shiftwidth=8
-
-"autocmd FileType python set autoindent smartindent et sts=2
-autocmd FileType python set autoindent smartindent et sts=4
-\ cinwords=class,def,elif,else,except,finally,for,if,try,while,with
-"autocmd FileType python inoremap # X#
-"autocmd FileType python set sw=2
-autocmd FileType python set sw=4
-
-augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-"  autocmd FileType text setlocal textwidth=78
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
-
-augroup END
-
-augroup fortran
-  au!
-  autocmd FileType fortran set sts=3 sw=3 expandtab smartindent
-  au BufNewFile *.f9? 0r ~/.vim/skel.f90
-augroup END
-
-"if has("multi_byte")
-"  if &termencoding == ""
-"    let &termencoding = &encoding
-"  endif
-"  set encoding=utf-8
-"  setglobal fileencoding=utf-8
-"  "setglobal bomb
-"  set fileencodings=ucs-bom,utf-8,latin1
-"endif
-
-if &term =~ '^screen'
-    " tmux will send xterm-style keys when xterm-keys is on
-    execute "set <xUp>=\e[1;*A"
-    execute "set <xDown>=\e[1;*B"
-    execute "set <xRight>=\e[1;*C"
-    execute "set <xLeft>=\e[1;*D"
-endif
-
-"colorscheme desert
-syntax enable
-
 "
 " Vundle
 "
@@ -109,6 +40,96 @@ let g:UltiSnipsListSnippets="<c-l>"
 " Omnicomplete
 "
 "set omnifunc=syntaxcomplete#Complete
+
+set sw=4
+set expandtab
+set ignorecase
+set ruler
+set backspace=indent,eol,start
+
+set nohlsearch
+set pastetoggle=<F12>
+
+if version > 710
+  source extras.vim
+endif
+
+" No smartindent by default. Turn it on for specific file types.
+au BufNewFile,BufRead * if &ft == '' | set nosi noai | endif
+
+autocmd FileType make set noexpandtab shiftwidth=8
+
+"autocmd FileType python set autoindent smartindent et sts=2
+"autocmd FileType python set autoindent smartindent et sts=4 sw=4 inoremap # X<c-h>#
+"\ cinwords=class,def,elif,else,except,finally,for,if,try,while,with,raise
+"autocmd FileType python inoremap # X#
+autocmd FileType tex set nosmartindent nocindent noautoindent indentexpr=
+
+augroup python 
+    set autoindent smartindent et sts=4 sw=4
+    set cinwords=class,def,elif,else,except,finally,for,if,try,while,with,raise
+
+    " To get rid of stupid indent removals for comment lines
+    inoremap # X<c-h>#
+augroup END
+
+augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=100
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+augroup END
+
+augroup fortran
+  au!
+  autocmd FileType fortran set sts=3 sw=3 expandtab smartindent
+  au BufNewFile *.f9? 0r ~/.vim/skel.f90
+
+  let s:extfname = expand("%:e")
+  if s:extfname ==? "f90" || s:extfname ==# "F" || s:extfname ==? "f95"
+  let fortran_free_source=1
+  unlet! fortran_fixed_source
+  else
+  let fortran_fixed_source=1
+  unlet! fortran_free_source
+  endif
+augroup END
+
+"if has("multi_byte")
+"  if &termencoding == ""
+"    let &termencoding = &encoding
+"  endif
+"  set encoding=utf-8
+"  setglobal fileencoding=utf-8
+"  "setglobal bomb
+"  set fileencodings=ucs-bom,utf-8,latin1
+"endif
+
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when xterm-keys is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+
+"colorscheme desert
+let g:tex_conceal='a'
+let g:tex_comment_nospell=1
+syntax enable
+
+nnoremap <F12> :set invpaste paste?<CR>
+set pastetoggle=<F12>
+"set showmode
 
 ""
 "" Indent-guides
