@@ -2,7 +2,7 @@
 " Vundle
 "
 set nocompatible
-filetype off 
+filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -25,7 +25,7 @@ filetype plugin indent on
 
 "
 " Snippets
-" 
+"
 "let g:UltiSnipsExpandTrigger="<tab>" " SuperTab should take care of this
 "let g:UltiSnipsExpandTrigger="k"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
@@ -49,6 +49,15 @@ set backspace=indent,eol,start
 
 set nohlsearch
 set pastetoggle=<F12>
+"
+"
+" Highlight unwanted spaces
+"
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 if version > 710
   source extras.vim
@@ -65,7 +74,7 @@ autocmd FileType make set noexpandtab shiftwidth=8
 "autocmd FileType python inoremap # X#
 autocmd FileType tex set nosmartindent nocindent noautoindent indentexpr=
 
-augroup python 
+augroup python
     set autoindent smartindent et sts=4 sw=4
     set cinwords=class,def,elif,else,except,finally,for,if,try,while,with,raise
 
@@ -103,6 +112,8 @@ augroup fortran
   unlet! fortran_free_source
   endif
 augroup END
+
+autocmd BufNewFile,BufRead *.g4 setf antlr
 
 "if has("multi_byte")
 "  if &termencoding == ""
