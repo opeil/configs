@@ -1,0 +1,44 @@
+priority 2
+
+snippet mi "in-line math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in (',', '.', '?', '-', ' '):
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$2
+endsnippet
+
+snippet beg "begin end"
+\begin{$1}
+$0
+\end{$1}
+endsnippet
+
+snippet lp "parentheses"
+\left(
+    $0
+\right)
+endsnippet
+
+snippet lb "brackets"
+\left[
+    $0
+\right]
+endsnippet
+
+snippet ooo "infinity" wA
+\infty
+endsnippet
+
+snippet ^ "superscript" iA
+^{${1}}
+endsnippet
+
+snippet _ "subscript" iA
+_{${1}}
+endsnippet
+
+snippet // "fraction" iA
+\frac{$1}{$2}
+endsnippet
