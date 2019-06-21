@@ -1,0 +1,14 @@
+
+   Git over an SSH tunnel
+
+   First, we create an ssh session in the master mode with agent forwarding
+
+      ssh -f -N -M -S "~/temp/session:%h" -A -L 9999:bitbucket.org:22 born
+
+   Then, we can do
+
+      git push ssh://localhost:9999/opeil/notes.git
+
+   To close the tunnel
+
+      ssh -S "~/temp/session:%h" -O exit born
