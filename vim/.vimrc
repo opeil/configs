@@ -24,6 +24,22 @@ call vundle#end()
 filetype plugin indent on
 
 "
+" Persistent undo
+" From an answer to: stackoverflow.com/questions/5700389
+"
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undodir')
+    " Create dirs
+    silent call system('mkdir -p ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+endif
+
+"
 " Snippets
 "
 "let g:UltiSnipsExpandTrigger="<tab>" " SuperTab should take care of this
@@ -63,6 +79,10 @@ if version > 710
   source extras.vim
 endif
 
+if &diff
+    colorscheme evening
+endif
+
 " No smartindent by default. Turn it on for specific file types.
 au BufNewFile,BufRead * if &ft == '' | set nosi noai | endif
 
@@ -73,6 +93,7 @@ autocmd FileType make set noexpandtab shiftwidth=8
 "\ cinwords=class,def,elif,else,except,finally,for,if,try,while,with,raise
 "autocmd FileType python inoremap # X#
 autocmd FileType tex set nosmartindent nocindent noautoindent indentexpr=
+let g:tex_flavor='latex'
 
 augroup python
     set autoindent smartindent et sts=4 sw=4
@@ -100,7 +121,7 @@ augroup END
 
 augroup fortran
   au!
-  autocmd FileType fortran set sts=3 sw=3 expandtab smartindent
+  autocmd FileType fortran set sts=3 sw=3 tw=100 expandtab smartindent
   au BufNewFile *.f9? 0r ~/.vim/skel.f90
 
   let s:extfname = expand("%:e")
