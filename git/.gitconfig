@@ -13,9 +13,18 @@
     co = checkout
     br = branch
     st = status
+    ct = commit
 
 [init]
 	templatedir = ~/.git_template
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
 
 [merge]
     tool = vimdiff
