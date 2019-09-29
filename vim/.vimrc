@@ -1,9 +1,15 @@
 "
-" Vundle
+" Basic settings
 "
 set nocompatible
+set lazyredraw
+set updatetime=300
+set cursorline
 filetype off
 
+"
+" Vundle
+"
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -11,13 +17,22 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Optional plugins
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 Plugin 'SirVer/ultisnips'
 "Plugin 'honza/vim-snippets'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'lervag/vimtex'
+Plugin 'altercation/vim-colors-solarized'
+"Plugin 'vim-syntastic/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'ctrlpvim/ctrlp.vim'
+"Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline-themes'
+Plugin 'airblade/vim-gitgutter'
 
 
 call vundle#end()
@@ -38,6 +53,40 @@ if has('persistent_undo')
     let &undodir = myUndoDir
     set undofile
 endif
+
+"
+" Solarized colorscheme
+"
+"let g:airline_theme='solarized'
+"if &background ==# "dark"
+"    let g:airline_solarized_bg='dark'
+"endif
+let g:solarized_termcolors=256
+colorscheme solarized
+
+"
+" Tagbar
+"
+nmap <F8> :TagbarToggle<CR>
+
+"
+" EasyMotion
+"
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1 " Turn on case-insensitive feature
+
+nmap <Leader>s <Plug>(easymotion-overwin-f2)
+" JK motions: Line motions
+nmap <Leader>w <Plug>(easymotion-bd-wl)
+nmap <Leader>n <Plug>(easymotion-n)
+nmap <Leader>N <Plug>(easymotion-N)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+"
+" GitGutter
+"
+set signcolumn=yes
 
 "
 " Snippets
@@ -75,9 +124,9 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-if version > 710
-  source extras.vim
-endif
+"if version > 710
+"  source extras.vim
+"endif
 
 if &diff
     colorscheme evening
@@ -154,7 +203,6 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
-"colorscheme desert
 let g:tex_conceal='a'
 let g:tex_comment_nospell=1
 syntax enable
