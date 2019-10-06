@@ -26,6 +26,14 @@ select case(${1:condition})
 end select
 endsnippet
 
+snippet selt "select type"
+select type(${1:condition})
+	type is(${2})
+		${3}
+	class default
+end select
+endsnippet
+
 snippet do "do"
 do ${1:i} = ${2:1}, ${3:N}
 	${4}
@@ -39,9 +47,9 @@ end do
 endsnippet
 
 snippet type "type"
-type ${1:name}
-	${3}
-end type $1
+type${2:, ${1:attributes}} :: ${3:name}
+	${0}
+end type $3
 endsnippet
 
 snippet open "open"
@@ -49,9 +57,8 @@ open (unit=${1:10}, file=${2:filename}, ${3})
 ${4}
 endsnippet
 
-snippet function "function"
+snippet fun "function"
 function ${1:name}(${2}) result(${3})
-	implicit none
 	${4:type} :: $3
 	${6}
 end function $1
@@ -59,7 +66,6 @@ endsnippet
 
 snippet sub "sub"
 subroutine ${1:name}(${2})
-	implicit none
 	${3}
 end subroutine $1
 endsnippet
@@ -72,43 +78,32 @@ snippet const "const"
 ${1:type}, parameter :: ${3} = ${4}
 endsnippet
 
-snippet int "integer"
+# Variable definitions
+snippet iv "integer"
 integer :: ${1}
 endsnippet
 
-snippet iarg "integer argument"
-integer, intent(${1}) :: ${2}
-endsnippet
-
-snippet rdarg "real(kind=dp) argument"
-real(kind=dp), intent(${1}) :: ${2}
-endsnippet
-
-snippet cdarg "complex(kind=dp) argument"
-complex(kind=dp), intent(${1}) :: ${2}
-endsnippet
-
-snippet larg "integer argument"
-logical, intent(${1}) :: ${2}
-endsnippet
-
-snippet targ "derived type argument"
-type(${1}), intent(${2}) :: ${3}
-endsnippet
-
-snippet rd "real(kind=dp)"
+snippet rv "real(kind=dp)"
 real(kind=dp) :: ${1}
 endsnippet
 
-snippet cd "complex(kind=dp)"
+#snippet rv "real(r8)"
+#real(r8) :: ${1}
+#endsnippet
+
+snippet cv "complex(kind=dp)"
 complex(kind=dp) :: ${1}
 endsnippet
 
-snippet log "logical"
+#snippet cv "complex(r8)"
+#complex(r8) :: ${1}
+#endsnippet
+
+snippet lv "logical"
 logical :: ${1}
 endsnippet
 
-snippet c "character"
+snippet ch "character"
 character :: ${1}
 endsnippet
 
@@ -118,6 +113,39 @@ endsnippet
 
 snippet tv "type variable"
 type(${1}) :: ${2}
+endsnippet
+
+snippet tp "type pointer"
+type(${1}), pointer :: ${2}
+endsnippet
+
+snippet clv "class variable"
+class(${1}) :: ${2}
+endsnippet
+
+# Procedure arguments
+snippet iarg "integer argument"
+integer, intent(${1})${2:${3:, attributes}} :: ${4}
+endsnippet
+
+snippet rarg "real(kind=dp) argument"
+real(kind=dp), intent(${1})${2:${3:, attributes}} :: ${4}
+endsnippet
+
+snippet carg "complex(kind=dp) argument"
+complex(kind=dp), intent(${1})${2:${3:, attributes}} :: ${4}
+endsnippet
+
+snippet larg "logical argument"
+logical, intent(${1})${2:${3:, attributes}} :: ${4}
+endsnippet
+
+snippet targ "derived type argument"
+type(${1}), intent(${2})${3:${4:, attributes}} :: ${5}
+endsnippet
+
+snippet clarg "class argument"
+class(${1}), intent(${2})${3:${4:, attributes}} :: ${5}
 endsnippet
 
 # custom snippets
@@ -152,3 +180,12 @@ module ${1:name}
 end module $1
 endsnippet
 
+snippet abs "abstract"
+abstract $0
+endsnippet
+
+snippet inter "interface" s
+interface${1: name}
+	$0
+end interface$1
+endsnippet
