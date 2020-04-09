@@ -170,19 +170,21 @@ augroup vimrcEx
 
 augroup END
 
-augroup fortran
-  au!
-  autocmd FileType fortran set sts=3 sw=3 tw=100 expandtab smartindent
-  au BufNewFile *.f9? 0r ~/.vim/skel.f90
-
+function DetectFortranSourceType()
   let s:extfname = expand("%:e")
   if s:extfname ==? "f90" || s:extfname ==# "F" || s:extfname ==? "f95"
-  let fortran_free_source=1
-  unlet! fortran_fixed_source
+      let fortran_free_source=1
+      unlet! fortran_fixed_source
   else
-  let fortran_fixed_source=1
-  unlet! fortran_free_source
+      let fortran_fixed_source=1
+      unlet! fortran_free_source
   endif
+endfunction
+
+augroup fortran
+  au!
+  autocmd FileType fortran set sts=3 sw=3 tw=100 expandtab smartindent | call DetectFortranSourceType()
+  au BufNewFile *.f9? 0r ~/.vim/skel.f90
 augroup END
 
 autocmd BufNewFile,BufRead *.g4 setf antlr
