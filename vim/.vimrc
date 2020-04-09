@@ -150,6 +150,8 @@ augroup python
 
     " To get rid of stupid indent removals for comment lines
     inoremap # X<c-h>#
+
+    au BufNewFile *.py 0r ~/.vim/skel.py
 augroup END
 
 augroup vimrcEx
