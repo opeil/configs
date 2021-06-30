@@ -3,8 +3,8 @@
 "
 set nocompatible
 set lazyredraw
-set updatetime=300
-set cursorline
+"set updatetime=300
+"set cursorline
 filetype off
 
 "
@@ -86,7 +86,7 @@ map <Leader>k <Plug>(easymotion-k)
 "
 " GitGutter
 "
-set signcolumn=yes
+"set signcolumn=yes
 
 "
 " Snippets
@@ -105,6 +105,12 @@ let g:UltiSnipsListSnippets="<c-l>"
 " Omnicomplete
 "
 "set omnifunc=syntaxcomplete#Complete
+
+"
+" Multiple cursors
+"
+let g:multi_cursor_exit_from_insert_mode = 1
+
 
 set sw=4
 set expandtab
@@ -185,6 +191,8 @@ augroup fortran
   au!
   autocmd FileType fortran set sts=3 sw=3 tw=100 expandtab smartindent | call DetectFortranSourceType()
   au BufNewFile *.f9? 0r ~/.vim/skel.f90
+
+  let g:fortran_do_enddo=1
 augroup END
 
 autocmd BufNewFile,BufRead *.g4 setf antlr
@@ -226,4 +234,5 @@ set pastetoggle=<F12>
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=lightgrey   ctermbg=lightgrey
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=white       ctermbg=white
 
+set tags=tags;/
 

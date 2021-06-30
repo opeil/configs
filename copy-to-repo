@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rsync -a $HOME/.tmux.conf tmux/.tmux.conf
+rsync -a $HOME/.tmux-gitbar.conf tmux/.tmux-gitbar.conf
+rsync -a $HOME/.tmux/ tmux/.tmux/
