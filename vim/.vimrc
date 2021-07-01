@@ -32,7 +32,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin 'vim-airline/vim-airline'
 "Plugin 'vim-airline/vim-airline-themes'
-Plugin 'airblade/vim-gitgutter'
+"Plugin 'airblade/vim-gitgutter'
 
 
 call vundle#end()
@@ -53,6 +53,17 @@ if has('persistent_undo')
     let &undodir = myUndoDir
     set undofile
 endif
+
+"
+" vimtex
+"
+let g:vimtex_compiler_latexmk = {'callback' : 0}
+
+"
+" Multiple cursors
+"
+let g:multi_cursor_exit_from_insert_mode = 1
+let g:multi_cursor_exit_from_visual_mode = 1
 
 "
 " Solarized colorscheme
@@ -179,10 +190,10 @@ augroup END
 function DetectFortranSourceType()
   let s:extfname = expand("%:e")
   if s:extfname ==? "f90" || s:extfname ==# "F" || s:extfname ==? "f95"
-      let fortran_free_source=1
+      let g:fortran_free_source=1
       unlet! fortran_fixed_source
   else
-      let fortran_fixed_source=1
+      let g:fortran_fixed_source=1
       unlet! fortran_free_source
   endif
 endfunction
@@ -190,7 +201,8 @@ endfunction
 augroup fortran
   au!
   autocmd FileType fortran set sts=3 sw=3 tw=100 expandtab smartindent | call DetectFortranSourceType()
-  au BufNewFile *.f9? 0r ~/.vim/skel.f90
+  au BufNewFile *.f9? 0r ~/.vim/skel.f90 | call DetectFortranSourceType()
+  au BufEnter *.f9? call DetectFortranSourceType()
 
   let g:fortran_do_enddo=1
 augroup END
