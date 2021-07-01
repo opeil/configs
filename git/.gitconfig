@@ -9,8 +9,9 @@
 	excludesfile = /home/opeil/.gitignore
 
 [alias]
-    lg = log --graph --all --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold black)%aD%C(reset) %C(dim green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(magenta)%s%C(reset) %C(dim cyan)- %an%C(reset)'
+    lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold black)%aD%C(reset) %C(dim green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(magenta)%s%C(reset) %C(dim cyan)- %an%C(reset)'
     co = checkout
+    ct = commit
     br = branch
     st = status
     ct = commit
@@ -32,3 +33,4 @@
 
 [mergetool]
     prompt = false
+
