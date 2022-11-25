@@ -2,4 +2,9 @@
 
 rsync -a $HOME/.tmux.conf tmux/.tmux.conf
 rsync -a $HOME/.tmux-gitbar.conf tmux/.tmux-gitbar.conf
-rsync -a $HOME/.tmux/ tmux/.tmux/
+rsync -a $HOME/.tmux/plugins tmux/.tmux/plugins
+
+rsync -a $HOME/.gitconfig  git/.gitconfig
+rsync -a $HOME/.gitignore  git/.gitignore
+
+rsync -a $HOME/.vim  vim/.vim
