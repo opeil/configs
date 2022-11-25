@@ -129,8 +129,13 @@ set ignorecase
 set ruler
 set backspace=indent,eol,start
 
+set smartcase
+au InsertEnter * set noignorecase
+au InsertLeave * set ignorecase
+
 set nohlsearch
 set pastetoggle=<F12>
+map <F9> :%s/\(\>\\|)\)%\(\<\\|(\)/\1 % \2/gc
 "
 "
 " Highlight unwanted spaces
@@ -187,6 +192,13 @@ augroup vimrcEx
 
 augroup END
 
+function GenerateFortranTemplate()
+    let s:year = systemlist('date +"%Y"')[0]
+
+    exe "0r ~/.vim/skel.f90"
+    exe "%s/202x/" . s:year . "/"
+endfunction
+
 function DetectFortranSourceType()
   let s:extfname = expand("%:e")
   if s:extfname ==? "f90" || s:extfname ==# "F" || s:extfname ==? "f95"
@@ -201,7 +213,7 @@ endfunction
 augroup fortran
   au!
   autocmd FileType fortran set sts=3 sw=3 tw=100 expandtab smartindent | call DetectFortranSourceType()
-  au BufNewFile *.f9? 0r ~/.vim/skel.f90 | call DetectFortranSourceType()
+  au BufNewFile *.f9? call GenerateFortranTemplate() | call DetectFortranSourceType()
   au BufEnter *.f9? call DetectFortranSourceType()
 
   let g:fortran_do_enddo=1
@@ -246,5 +258,5 @@ set pastetoggle=<F12>
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=lightgrey   ctermbg=lightgrey
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=white       ctermbg=white
 
-set tags=tags;/
+set tags=.git/tags;~
 
