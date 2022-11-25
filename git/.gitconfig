@@ -14,7 +14,6 @@
     ct = commit
     br = branch
     st = status
-    ct = commit
 
 [init]
 	templatedir = ~/.git_template
